@@ -1,0 +1,9 @@
+C:\Users\MedicSef\OneDrive\Pentru scoala\Info\C#\Neural Network - Function Plotter\Neural Network - Function Plotter\bin\Debug\Neural Network - Function Plotter.exe.config
+C:\Users\MedicSef\OneDrive\Pentru scoala\Info\C#\Neural Network - Function Plotter\Neural Network - Function Plotter\bin\Debug\Neural Network - Function Plotter.exe
+C:\Users\MedicSef\OneDrive\Pentru scoala\Info\C#\Neural Network - Function Plotter\Neural Network - Function Plotter\bin\Debug\Neural Network - Function Plotter.pdb
+C:\Users\MedicSef\OneDrive\Pentru scoala\Info\C#\Neural Network - Function Plotter\Neural Network - Function Plotter\obj\Debug\Neural Network - Function Plotter.csprojResolveAssemblyReference.cache
+C:\Users\MedicSef\OneDrive\Pentru scoala\Info\C#\Neural Network - Function Plotter\Neural Network - Function Plotter\obj\Debug\Neural_Network___Function_Plotter.Form1.resources
+C:\Users\MedicSef\OneDrive\Pentru scoala\Info\C#\Neural Network - Function Plotter\Neural Network - Function Plotter\obj\Debug\Neural_Network___Function_Plotter.Properties.Resources.resources
+C:\Users\MedicSef\OneDrive\Pentru scoala\Info\C#\Neural Network - Function Plotter\Neural Network - Function Plotter\obj\Debug\Neural Network - Function Plotter.csproj.GenerateResource.Cache
+C:\Users\MedicSef\OneDrive\Pentru scoala\Info\C#\Neural Network - Function Plotter\Neural Network - Function Plotter\obj\Debug\Neural Network - Function Plotter.exe
+C:\Users\MedicSef\OneDrive\Pentru scoala\Info\C#\Neural Network - Function Plotter\Neural Network - Function Plotter\obj\Debug\Neural Network - Function Plotter.pdb
