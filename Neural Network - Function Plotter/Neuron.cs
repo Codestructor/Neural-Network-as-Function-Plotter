@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Neural_Network___Function_Plotter
 {
-    class Connection
-    {
-        public double Weight { get; set; }
-        public double DeltaWeight { get; set; }
-    }
-
     class Neuron
     {
         //Constructor
