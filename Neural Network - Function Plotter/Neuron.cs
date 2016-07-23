@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Neural_Network___Function_Plotter.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -48,13 +49,13 @@ namespace Neural_Network___Function_Plotter
         public void calcOutputGradients(double targetVal)
         {
             double delta = targetVal - m_outputVal;
-            m_gradient = delta * Neuron.transferFunctionDerivative(m_input);
+            m_gradient = delta * MathUtils.TransferFunctionDerivative(m_input);
         }
 
         public void calcHiddenGradient(Layer nextLayer)
         {
             double dow = sumDOW(nextLayer);
-            m_gradient = dow * Neuron.transferFunctionDerivative(m_input);
+            m_gradient = dow * MathUtils.TransferFunctionDerivative(m_input);
         }
 
         public void updateInputWeights(Layer prevLayer)
@@ -82,7 +83,7 @@ namespace Neural_Network___Function_Plotter
                 m_input += prevLayer.neurons[n].getOutputVal() * prevLayer.neurons[n].getConnection(m_myIndex).Weight;
             }
 
-            m_outputVal = Neuron.transferFunction(m_input);
+            m_outputVal = MathUtils.TransferFunction(m_input);
         }
 
         //Private
@@ -91,18 +92,6 @@ namespace Neural_Network___Function_Plotter
         private double m_gradient;
         private int m_myIndex;
         private List<Connection> m_outputWeights = new List<Connection>();
-
-        private static double transferFunction(double x)
-        {
-            //For this fction the input vals must be scaled to fit in (-1, 1)
-            //Obv, the output vals will be in the range of (-1, 1)
-            return Math.Tanh(x);
-        }
-
-        private static double transferFunctionDerivative(double x)
-        {
-            return 1.0 - Math.Tanh(x) * Math.Tanh(x);
-        }
 
         private double sumDOW(Layer nexLayer)
         {
