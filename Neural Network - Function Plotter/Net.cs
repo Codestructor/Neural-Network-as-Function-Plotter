@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Neural_Network___Function_Plotter
 {
-    class Net
+    public class Net
     {
-        //Constructor
         public Net(List<int> topology)
         {
             int numLayers = topology.Count();
@@ -114,7 +111,7 @@ namespace Neural_Network___Function_Plotter
 
             Layer endLayer = m_layers[m_layers.Count() - 1];
 
-            for(int n = 0; n< endLayer.neuronsList.Count() - 1; n++)
+            for (int n = 0; n < endLayer.neuronsList.Count() - 1; n++)
             {
                 resultVals.Add(endLayer.neuronsList[n].getOutputVal());
             }

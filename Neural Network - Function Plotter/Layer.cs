@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Neural_Network___Function_Plotter
 {
-    class Layer
+    public class Layer
     {
-        //Constructor
         public Layer(int neuronsNum, int numOutputs, Random rand)
         {
             //<= for it adds a bias neuron, too

@@ -4,9 +4,8 @@ using System.Linq;
 
 namespace Neural_Network___Function_Plotter
 {
-    class Neuron
+    public class Neuron
     {
-        //Constructor
         public Neuron(int numOutputs, int myIndex, Random rand)
         {
             //Does not include the bias neuron as it receives no inputs
