@@ -1,36 +1,39 @@
-﻿using System;
+﻿using Neural_Network___Function_Plotter.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Neural_Network___Function_Plotter
 {
-    class Connection
+    public class Neuron
     {
-        public double weight;
-        public double deltaWeight;
-    }
+        private List<Connection> m_outputWeights = new List<Connection>();
 
-    class Neuron
-    {
-        //Constructor
+        private readonly int myIndex;
+
         public Neuron(int numOutputs, int myIndex, Random rand)
         {
+            this.myIndex = myIndex;
+
             //Does not include the bias neuron as it receives no inputs
             for (int c = 0; c < numOutputs; c++) //c -> connection
             {
-                Connection con = new Connection();
-                if (rand.Next(0, 9999) % 2 == 0)
-                    con.weight = rand.NextDouble();
-                else
-                    con.weight = -rand.NextDouble();
-                m_outputWeights.Add(con);
-                //Console.WriteLine(con.weight.ToString());
-            }
+                Connection connection = new Connection();
 
-            m_myIndex = myIndex;
+                if (rand.Next(0, 9999) % 2 == 0)
+                    connection.Weight = rand.NextDouble();
+                else
+                    connection.Weight = -rand.NextDouble();
+
+                m_outputWeights.Add(connection);
+            }
         }
+
+        private double input;
+        public double Input { get { return input; } set { input = value; } }
+
+        private double output;
+        public double Output { get { return output; } set { output = value; } }
 
         //Public
         public static double eta = 0.1;
@@ -44,83 +47,61 @@ namespace Neural_Network___Function_Plotter
          * 0.0 - no momentum
          * 0.5 - moderate momentum
          */
-        public void setInputVal(double val) { m_input = val; }
-
-        public void setOutputVal(double val) { m_outputVal = val; }
-
-        public double getOutputVal() { return m_outputVal; }
-
-        public double getInputVal() { return m_input; }
 
         public Connection getConnection(int index) { return m_outputWeights[index]; }
 
         public void calcOutputGradients(double targetVal)
         {
-            double delta = targetVal - m_outputVal;
-            m_gradient = delta * Neuron.transferFunctionDerivative(m_input);
+            double delta = targetVal - output;
+            m_gradient = delta * MathUtils.TransferFunctionDerivative(input);
         }
 
         public void calcHiddenGradient(Layer nextLayer)
         {
             double dow = sumDOW(nextLayer);
-            m_gradient = dow * Neuron.transferFunctionDerivative(m_input);
+            m_gradient = dow * MathUtils.TransferFunctionDerivative(input);
         }
 
         public void updateInputWeights(Layer prevLayer)
         {
-            for (int n = 0; n < prevLayer.neuronsList.Count(); n++)
+            for (int n = 0; n < prevLayer.neurons.Count(); n++)
             {
-                Neuron neuron = prevLayer.neuronsList[n];
-                double oldDeltaWeight = neuron.getConnection(m_myIndex).deltaWeight;
+                Neuron neuron = prevLayer.neurons[n];
+                double oldDeltaWeight = neuron.getConnection(myIndex).DeltaWeight;
 
                 //eta = overall learning rate
                 //alpha = momentum -> adds a fraction of the previous deltaweight
-                double newDeltaWeight = eta * neuron.getInputVal() * m_gradient + alpha * oldDeltaWeight;
+                double newDeltaWeight = eta * neuron.Input * m_gradient + alpha * oldDeltaWeight;
 
-                neuron.m_outputWeights[m_myIndex].deltaWeight = newDeltaWeight;
-                neuron.m_outputWeights[m_myIndex].weight += newDeltaWeight;
+                neuron.m_outputWeights[myIndex].DeltaWeight = newDeltaWeight;
+                neuron.m_outputWeights[myIndex].Weight += newDeltaWeight;
             }
         }
 
         public void feedForward(Layer prevLayer)
         {
-            m_input = 0.0;
+            input = 0.0;
 
-            for (int n = 0; n < prevLayer.neuronsList.Count(); n++)
+            for (int n = 0; n < prevLayer.neurons.Count(); n++)
             {
-                m_input += prevLayer.neuronsList[n].getOutputVal() * prevLayer.neuronsList[n].getConnection(m_myIndex).weight;
+                input += prevLayer.neurons[n].Output * prevLayer.neurons[n].getConnection(myIndex).Weight;
             }
 
-            m_outputVal = Neuron.transferFunction(m_input);
+            output = MathUtils.TransferFunction(input);
         }
 
         //Private
-        private double m_input;
-        private double m_outputVal;
+
         private double m_gradient;
-        private int m_myIndex;
-        private List<Connection> m_outputWeights = new List<Connection>();
-
-        private static double transferFunction(double x)
-        {
-            //For this fction the input vals must be scaled to fit in (-1, 1)
-            //Obv, the output vals will be in the range of (-1, 1)
-            return Math.Tanh(x);
-        }
-
-        private static double transferFunctionDerivative(double x)
-        {
-            return 1.0 - Math.Tanh(x) * Math.Tanh(x);
-        }
 
         private double sumDOW(Layer nexLayer)
         {
             double sum = 0.0;
 
             //Sum our contributions of the errors at the nodes we feed
-            for (int n = 0; n < nexLayer.neuronsList.Count() - 1; n++)
+            for (int n = 0; n < nexLayer.neurons.Count() - 1; n++)
             {
-                sum += m_outputWeights[n].weight * nexLayer.neuronsList[n].m_gradient;
+                sum += m_outputWeights[n].Weight * nexLayer.neurons[n].m_gradient;
             }
 
             return sum;
