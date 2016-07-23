@@ -8,8 +8,8 @@ namespace Neural_Network___Function_Plotter
 {
     class Connection
     {
-        public double weight;
-        public double deltaWeight;
+        public double Weight { get; set; }
+        public double DeltaWeight { get; set; }
     }
 
     class Neuron
@@ -20,12 +20,12 @@ namespace Neural_Network___Function_Plotter
             //Does not include the bias neuron as it receives no inputs
             for (int c = 0; c < numOutputs; c++) //c -> connection
             {
-                Connection con = new Connection();
+                Connection connection = new Connection();
                 if (rand.Next(0, 9999) % 2 == 0)
-                    con.weight = rand.NextDouble();
+                    connection.Weight = rand.NextDouble();
                 else
-                    con.weight = -rand.NextDouble();
-                m_outputWeights.Add(con);
+                    connection.Weight = -rand.NextDouble();
+                m_outputWeights.Add(connection);
                 //Console.WriteLine(con.weight.ToString());
             }
 
@@ -71,14 +71,14 @@ namespace Neural_Network___Function_Plotter
             for (int n = 0; n < prevLayer.neuronsList.Count(); n++)
             {
                 Neuron neuron = prevLayer.neuronsList[n];
-                double oldDeltaWeight = neuron.getConnection(m_myIndex).deltaWeight;
+                double oldDeltaWeight = neuron.getConnection(m_myIndex).DeltaWeight;
 
                 //eta = overall learning rate
                 //alpha = momentum -> adds a fraction of the previous deltaweight
                 double newDeltaWeight = eta * neuron.getInputVal() * m_gradient + alpha * oldDeltaWeight;
 
-                neuron.m_outputWeights[m_myIndex].deltaWeight = newDeltaWeight;
-                neuron.m_outputWeights[m_myIndex].weight += newDeltaWeight;
+                neuron.m_outputWeights[m_myIndex].DeltaWeight = newDeltaWeight;
+                neuron.m_outputWeights[m_myIndex].Weight += newDeltaWeight;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Neural_Network___Function_Plotter
 
             for (int n = 0; n < prevLayer.neuronsList.Count(); n++)
             {
-                m_input += prevLayer.neuronsList[n].getOutputVal() * prevLayer.neuronsList[n].getConnection(m_myIndex).weight;
+                m_input += prevLayer.neuronsList[n].getOutputVal() * prevLayer.neuronsList[n].getConnection(m_myIndex).Weight;
             }
 
             m_outputVal = Neuron.transferFunction(m_input);
@@ -120,7 +120,7 @@ namespace Neural_Network___Function_Plotter
             //Sum our contributions of the errors at the nodes we feed
             for (int n = 0; n < nexLayer.neuronsList.Count() - 1; n++)
             {
-                sum += m_outputWeights[n].weight * nexLayer.neuronsList[n].m_gradient;
+                sum += m_outputWeights[n].Weight * nexLayer.neuronsList[n].m_gradient;
             }
 
             return sum;
