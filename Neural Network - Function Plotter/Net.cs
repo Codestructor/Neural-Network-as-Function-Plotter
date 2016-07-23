@@ -39,7 +39,7 @@ namespace Neural_Network___Function_Plotter
             //Assign the input values into the input neurons
             for (int i = 0; i < inputVals.Count(); i++)
             {
-                m_layers[0].neurons[i].setOutputVal(inputVals[i]);
+                m_layers[0].neurons[i].Output = inputVals[i];
             }
 
             //Forward propagate
@@ -61,7 +61,7 @@ namespace Neural_Network___Function_Plotter
 
             for (int n = 0; n < outputLayer.neurons.Count() - 1; n++)
             {
-                double delta = targetVals[n] - outputLayer.neurons[n].getOutputVal();
+                double delta = targetVals[n] - outputLayer.neurons[n].Output;
                 m_error += delta * delta;
             }
 
@@ -113,7 +113,7 @@ namespace Neural_Network___Function_Plotter
 
             for (int n = 0; n < endLayer.neurons.Count() - 1; n++)
             {
-                resultVals.Add(endLayer.neurons[n].getOutputVal());
+                resultVals.Add(endLayer.neurons[n].Output);
             }
         }
 

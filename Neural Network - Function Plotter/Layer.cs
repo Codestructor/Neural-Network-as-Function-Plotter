@@ -17,7 +17,7 @@ namespace Neural_Network___Function_Plotter
                 neurons.Add(neuron);
             }
 
-            neurons[neuronsNum].setOutputVal(1.0);
+            neurons[neuronsNum].Output = 1.0;
             neurons[neuronsNum].Input = 1.0;
         }
     }

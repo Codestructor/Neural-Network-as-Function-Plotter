@@ -27,6 +27,9 @@ namespace Neural_Network___Function_Plotter
         private double input;
         public double Input { get { return input; } set { input = value; } }
 
+        private double output;
+        public double Output { get { return output; } set { output = value; } }
+
         //Public
         public static double eta = 0.1;
         /*
@@ -39,15 +42,12 @@ namespace Neural_Network___Function_Plotter
          * 0.0 - no momentum
          * 0.5 - moderate momentum
          */
-        public void setOutputVal(double val) { m_outputVal = val; }
-
-        public double getOutputVal() { return m_outputVal; }
 
         public Connection getConnection(int index) { return m_outputWeights[index]; }
 
         public void calcOutputGradients(double targetVal)
         {
-            double delta = targetVal - m_outputVal;
+            double delta = targetVal - output;
             m_gradient = delta * MathUtils.TransferFunctionDerivative(input);
         }
 
@@ -79,15 +79,14 @@ namespace Neural_Network___Function_Plotter
 
             for (int n = 0; n < prevLayer.neurons.Count(); n++)
             {
-                input += prevLayer.neurons[n].getOutputVal() * prevLayer.neurons[n].getConnection(m_myIndex).Weight;
+                input += prevLayer.neurons[n].Output * prevLayer.neurons[n].getConnection(m_myIndex).Weight;
             }
 
-            m_outputVal = MathUtils.TransferFunction(input);
+            output = MathUtils.TransferFunction(input);
         }
 
         //Private
 
-        private double m_outputVal;
         private double m_gradient;
         private int m_myIndex;
         private List<Connection> m_outputWeights = new List<Connection>();
