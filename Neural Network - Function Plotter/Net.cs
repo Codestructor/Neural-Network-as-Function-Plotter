@@ -33,22 +33,22 @@ namespace Neural_Network___Function_Plotter
 
         public void feedForward(List<double> inputVals)
         {
-            if (inputVals.Count() != m_layers[0].neuronsList.Count() - 1)
+            if (inputVals.Count() != m_layers[0].neurons.Count() - 1)
                 return;
 
             //Assign the input values into the input neurons
             for (int i = 0; i < inputVals.Count(); i++)
             {
-                m_layers[0].neuronsList[i].setOutputVal(inputVals[i]);
+                m_layers[0].neurons[i].setOutputVal(inputVals[i]);
             }
 
             //Forward propagate
             for (int layerNum = 1; layerNum < m_layers.Count(); layerNum++)
             {
                 Layer prevLayer = m_layers[layerNum - 1];
-                for (int n = 0; n < m_layers[layerNum].neuronsList.Count() - 1; n++)
+                for (int n = 0; n < m_layers[layerNum].neurons.Count() - 1; n++)
                 {
-                    m_layers[layerNum].neuronsList[n].feedForward(prevLayer);
+                    m_layers[layerNum].neurons[n].feedForward(prevLayer);
                 }
             }
         }
@@ -59,9 +59,9 @@ namespace Neural_Network___Function_Plotter
             Layer outputLayer = m_layers[m_layers.Count() - 1];
             m_error = 0.0; //overall error of the net (RMS)
 
-            for (int n = 0; n < outputLayer.neuronsList.Count() - 1; n++)
+            for (int n = 0; n < outputLayer.neurons.Count() - 1; n++)
             {
-                double delta = targetVals[n] - outputLayer.neuronsList[n].getOutputVal();
+                double delta = targetVals[n] - outputLayer.neurons[n].getOutputVal();
                 m_error += delta * delta;
             }
 
@@ -76,9 +76,9 @@ namespace Neural_Network___Function_Plotter
             m_error = Math.Sqrt(m_error); //RMS*/
 
             //Calculate output layer gradients
-            for (int n = 0; n < outputLayer.neuronsList.Count() - 1; n++)
+            for (int n = 0; n < outputLayer.neurons.Count() - 1; n++)
             {
-                outputLayer.neuronsList[n].calcOutputGradients(targetVals[n]);
+                outputLayer.neurons[n].calcOutputGradients(targetVals[n]);
             }
 
             //Calculate gradients on hidden layers
@@ -87,8 +87,8 @@ namespace Neural_Network___Function_Plotter
                 Layer hiddenLayer = m_layers[layerNum];
                 Layer nextLayer = m_layers[layerNum + 1];
 
-                for (int n = 0; n < hiddenLayer.neuronsList.Count(); n++)
-                    hiddenLayer.neuronsList[n].calcHiddenGradient(nextLayer);
+                for (int n = 0; n < hiddenLayer.neurons.Count(); n++)
+                    hiddenLayer.neurons[n].calcHiddenGradient(nextLayer);
             }
 
             //For all layers, from outputs to 1st hidden layer, update connection weights
@@ -97,9 +97,9 @@ namespace Neural_Network___Function_Plotter
                 Layer layer = m_layers[layerNum];
                 Layer prevLayer = m_layers[layerNum - 1];
 
-                for (int n = 0; n < layer.neuronsList.Count() - 1; n++)
+                for (int n = 0; n < layer.neurons.Count() - 1; n++)
                 {
-                    layer.neuronsList[n].updateInputWeights(prevLayer);
+                    layer.neurons[n].updateInputWeights(prevLayer);
                 }
             }
 
@@ -111,9 +111,9 @@ namespace Neural_Network___Function_Plotter
 
             Layer endLayer = m_layers[m_layers.Count() - 1];
 
-            for (int n = 0; n < endLayer.neuronsList.Count() - 1; n++)
+            for (int n = 0; n < endLayer.neurons.Count() - 1; n++)
             {
-                resultVals.Add(endLayer.neuronsList[n].getOutputVal());
+                resultVals.Add(endLayer.neurons[n].getOutputVal());
             }
         }
 

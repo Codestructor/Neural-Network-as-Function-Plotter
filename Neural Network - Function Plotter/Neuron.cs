@@ -59,9 +59,9 @@ namespace Neural_Network___Function_Plotter
 
         public void updateInputWeights(Layer prevLayer)
         {
-            for (int n = 0; n < prevLayer.neuronsList.Count(); n++)
+            for (int n = 0; n < prevLayer.neurons.Count(); n++)
             {
-                Neuron neuron = prevLayer.neuronsList[n];
+                Neuron neuron = prevLayer.neurons[n];
                 double oldDeltaWeight = neuron.getConnection(m_myIndex).DeltaWeight;
 
                 //eta = overall learning rate
@@ -77,9 +77,9 @@ namespace Neural_Network___Function_Plotter
         {
             m_input = 0.0;
 
-            for (int n = 0; n < prevLayer.neuronsList.Count(); n++)
+            for (int n = 0; n < prevLayer.neurons.Count(); n++)
             {
-                m_input += prevLayer.neuronsList[n].getOutputVal() * prevLayer.neuronsList[n].getConnection(m_myIndex).Weight;
+                m_input += prevLayer.neurons[n].getOutputVal() * prevLayer.neurons[n].getConnection(m_myIndex).Weight;
             }
 
             m_outputVal = Neuron.transferFunction(m_input);
@@ -109,9 +109,9 @@ namespace Neural_Network___Function_Plotter
             double sum = 0.0;
 
             //Sum our contributions of the errors at the nodes we feed
-            for (int n = 0; n < nexLayer.neuronsList.Count() - 1; n++)
+            for (int n = 0; n < nexLayer.neurons.Count() - 1; n++)
             {
-                sum += m_outputWeights[n].Weight * nexLayer.neuronsList[n].m_gradient;
+                sum += m_outputWeights[n].Weight * nexLayer.neurons[n].m_gradient;
             }
 
             return sum;
